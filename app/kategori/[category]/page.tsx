@@ -56,27 +56,6 @@ const exerciseData: Record<
         equipment: "Sandalye",
         image: "/quadriceps-strengthening-exercise-chair.jpg",
       },
-      {
-        id: "duvara-oturma",
-        title: "Duvara Oturma",
-        difficulty: "Orta",
-        equipment: "Duvar",
-        image: "/wall-sit-exercise-knee-rehabilitation.jpg",
-      },
-      {
-        id: "hamstring-germe",
-        title: "Hamstring Germe",
-        difficulty: "Başlangıç",
-        equipment: "Egzersiz Bandı",
-        image: "/hamstring-stretch-resistance-band-therapy.jpg",
-      },
-      {
-        id: "step-up",
-        title: "Step Up",
-        difficulty: "Orta",
-        equipment: "Step/Basamak",
-        image: "/step-up-exercise-knee-rehabilitation.jpg",
-      },
     ],
   },
   omuz: {
@@ -89,58 +68,16 @@ const exerciseData: Record<
         equipment: "Ekipman Yok",
         image: "/pendulum-shoulder-exercise-physiotherapy.jpg",
       },
-      {
-        id: "duvar-tirmanisi",
-        title: "Duvar Tırmanışı",
-        difficulty: "Başlangıç",
-        equipment: "Duvar",
-        image: "/placeholder.svg?height=300&width=400",
-      },
-      {
-        id: "omuz-rotasyonu",
-        title: "İç-Dış Rotasyon",
-        difficulty: "Orta",
-        equipment: "Direnç Bandı",
-        image: "/placeholder.svg?height=300&width=400",
-      },
-      {
-        id: "skapular-sikma",
-        title: "Skapular Sıkma",
-        difficulty: "Başlangıç",
-        equipment: "Ekipman Yok",
-        image: "/placeholder.svg?height=300&width=400",
-      },
     ],
   },
   bel: {
     title: "Bel Ağrısı Egzersizleri",
     exercises: [
       {
-        id: "pelvik-tilt",
-        title: "Pelvik Tilt",
+        id: "ayak-pompasi",
+        title: "Ayak Pompası",
         difficulty: "Başlangıç",
-        equipment: "Egzersiz Matı",
-        image: "/placeholder.svg?height=300&width=400",
-      },
-      {
-        id: "kopru",
-        title: "Köprü Egzersizi",
-        difficulty: "Başlangıç",
-        equipment: "Egzersiz Matı",
-        image: "/placeholder.svg?height=300&width=400",
-      },
-      {
-        id: "bird-dog",
-        title: "Bird Dog",
-        difficulty: "Orta",
-        equipment: "Egzersiz Matı",
-        image: "/placeholder.svg?height=300&width=400",
-      },
-      {
-        id: "diz-gogus",
-        title: "Diz-Göğüs Germe",
-        difficulty: "Başlangıç",
-        equipment: "Egzersiz Matı",
+        equipment: "Ekipman Yok",
         image: "/placeholder.svg?height=300&width=400",
       },
     ],
@@ -219,8 +156,9 @@ const difficultyColors: Record<string, string> = {
   İleri: "bg-destructive/20 text-destructive",
 }
 
-export default function CategoryPage({ params }: { params: { category: string } }) {
-  const categoryData = exerciseData[params.category]
+export default async function CategoryPage({ params }: { params: Promise<{ category: string }> }) {
+  const { category } = await params
+  const categoryData = exerciseData[category]
 
   if (!categoryData) {
     notFound()
@@ -263,7 +201,7 @@ export default function CategoryPage({ params }: { params: { category: string } 
       <section className="container mx-auto px-4 pb-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {categoryData.exercises.map((exercise) => (
-            <Link key={exercise.id} href={`/egzersiz/${params.category}/${exercise.id}`}>
+            <Link key={exercise.id} href={`/egzersiz/${category}/${exercise.id}`}>
               <Card className="group hover:border-accent transition-all duration-300 overflow-hidden cursor-pointer h-full">
                 <div className="relative h-48 overflow-hidden bg-muted">
                   <img
