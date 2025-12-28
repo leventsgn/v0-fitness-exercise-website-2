@@ -14,7 +14,10 @@ const nextConfig: NextConfig = {
         hostname: "**.public.blob.vercel-storage.com",
       },
     ],
+    unoptimized: true,
   },
+  output: 'export',
+  trailingSlash: true,
 }
 
 export default nextConfig
